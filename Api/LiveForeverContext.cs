@@ -100,6 +100,8 @@ public class Volunteer : Person
     public string? Skills { get; set; }
     public string? Notes { get; set; }
     public required List<Role> Roles { get; set; }
+    public required string IdentityProvider { get; set; }
+    public required string UserDetails { get; set; }
 
 
     public ICollection? Elderlies { get; set; }
