@@ -18,6 +18,7 @@ dotnet restore && dotnet build
 ## AZURE STATIC WEB APPS CLI ##
 # Uncomment the below to install Azure Static Web Apps CLI. Make sure you have installed node.js
 npm install -g @azure/static-web-apps-cli
+npm install -g azure-functions-core-tools@4
 
 ## GitHub Copilot CLI ##
 npm install -g @githubnext/github-copilot-cli
@@ -41,3 +42,5 @@ echo '
 alias ghcp='github-copilot-cli'
 eval "$(github-copilot-cli alias -- "$0")"
 ' >> $HOME/.bashrc
+
+pwsh -File ./.devcontainer/on-create.ps1
