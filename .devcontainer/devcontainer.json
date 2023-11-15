@@ -1,0 +1,76 @@
+{
+	"name": "Azure Static Web Apps",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"context": ".",
+		"args": {
+			// version: 7.0, 7.0-bullseye-slim, 7.0-jammy, 6.0, 6.0-bullseye-slim, 6.0-jammy, 6.0-focal
+			"VARIANT": "7.0"
+		}
+	},
+	"forwardPorts": [
+		7071,
+		5000,
+		4280
+	],
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-dotnettools.vscode-dotnet-runtime",
+				"ms-azuretools.vscode-azurefunctions",
+				"ms-azuretools.vscode-azurestaticwebapps",
+				"ms-dotnettools.csdevkit",
+				"ms-vscode.PowerShell",
+				"ms-vscode.vscode-node-azure-pack",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"github.copilot",
+				"github.copilot-chat",
+				"github.copilot-labs",
+				"ms-azuretools.vscode-docker"
+			],
+			"settings": {
+				// Recommended settings for the explorer pane
+				"explorer.sortOrder": "type",
+				"explorer.fileNesting.enabled": true,
+				"explorer.fileNesting.patterns": {
+					"*.js": "${capture}.js.map",
+					"*.razor": "${capture}.razor.cs,${capture}.razor.css"
+				}
+			}
+		},
+		// Use 'postCreateCommand' to run commands after the container is created.
+		// "postCreateCommand": "node --version",
+		// Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+		"remoteUser": "vscode",
+		"features": {
+			"ghcr.io/devcontainers/features/azure-cli:1": {
+				"version": "latest"
+			},
+			"ghcr.io/devcontainers/features/common-utils:2": {
+				"installZsh": true,
+				"installOhMyZsh": true,
+				"upgradePackages": true,
+				"username": "automatic",
+				"userUid": "automatic",
+				"userGid": "automatic"
+			},
+			"ghcr.io/devcontainers/features/github-cli:1": {
+				"installDirectlyFromGitHubRelease": true,
+				"version": "latest"
+			},
+			"ghcr.io/devcontainers/features/node:1": {
+				"nodeGypDependencies": true,
+				"version": "18",
+				"nvmVersion": "latest"
+			},
+			"ghcr.io/devcontainers/features/powershell:1": {
+				"version": "latest"
+			}
+		},
+		// Uncomment if you want to use bash in 'onCreateCommand' after the container is created
+		"onCreateCommand": "/bin/bash ./.devcontainer/on-create.sh > ~/on-create.log"
+	}
+}
