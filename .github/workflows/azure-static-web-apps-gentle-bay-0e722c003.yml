@@ -32,6 +32,12 @@ jobs:
           api_location: "Api" # Api source code path - optional
           output_location: "wwwroot" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+      # Now add comment to the PR with the URL
+      - name: Comment PR
+        uses: unsplash/comment-on-pr@v1
+        with: 
+          message: "Deployed to ${{ steps.builddeploy.outputs.web_url }}"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
