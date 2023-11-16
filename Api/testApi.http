@@ -1,0 +1,11 @@
+@hostname=localhost
+@port=7071
+@host=http://{{hostname}}:{{port}}/api
+
+
+GET {{host}}/Function1
+
+
+
+
+

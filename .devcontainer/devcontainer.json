@@ -1,0 +1,113 @@
+{
+	"name": "DevContainer for .NET",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"context": ".",
+		"args": {
+			// version: 7.0, 7.0-bullseye-slim, 7.0-jammy, 6.0, 6.0-bullseye-slim, 6.0-jammy, 6.0-focal
+			"VARIANT": "7.0"
+		}
+	},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		// ASP.NET Core Web/API App, Blazor App
+		5000,
+		7071,
+		// Azure Static Web Apps
+		4280
+	],
+	"portsAttributes": {
+		"7071": {
+			"label": "Azure Functions",
+			"onAutoForward": "notify"
+		},
+		"4280": {
+			"label": "Live Server",
+			"onAutoForward": "openBrowser"
+		},
+		"5000": {
+			"label": "ASP.NET Core",
+			"onAutoForward": "notify"
+		}
+	},
+	"features": {
+		// Azure CLI
+		"ghcr.io/devcontainers/features/azure-cli:latest": {
+			"version": "latest"
+		},
+		// GitHub CLI
+		"ghcr.io/devcontainers/features/github-cli:latest": {
+			"version": "latest"
+		},
+		// node.js
+		"ghcr.io/devcontainers/features/node:latest": {
+			// version: 'latest', 'lts', '18', '16', '14'
+			"version": "18",
+			"nodeGypDependencies": true,
+			"nvmInstallPath": "/usr/local/share/nvm"
+		},
+		// Install common utilities
+		"ghcr.io/devcontainers/features/common-utils:1": {
+			"installZsh": true,
+			"installOhMyZsh": true,
+			"upgradePackages": true,
+			"username": "vscode",
+			"uid": "1000",
+			"gid": "1000"
+		}
+	},
+	"overrideFeatureInstallOrder": [
+		"ghcr.io/devcontainers/features/common-utils"
+	],
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-dotnettools.vscode-dotnet-runtime",
+				"ms-azuretools.vscode-azurefunctions",
+				"ms-azuretools.vscode-azureresourcegroups",
+				"ms-azuretools.vscode-azurestaticwebapps",
+				"ms-dotnettools.csdevkit",
+				"ms-vscode.PowerShell",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"github.copilot",
+				"github.copilot-chat",
+				"github.copilot-labs",
+				"ms-azuretools.vscode-docker"
+			],
+			"settings": {
+				// Uncomment if you want to disable the minimap view
+				// "editor.minimap.enabled": false,
+				// Recommended settings for the explorer pane
+				"explorer.sortOrder": "type",
+				"explorer.fileNesting.enabled": true,
+				"explorer.fileNesting.patterns": {
+					"*.js": "${capture}.js.map",
+					"*.razor": "${capture}.razor.cs,${capture}.razor.css"
+				},
+				"terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+				"terminal.integrated.fontWeight": "300",
+				"terminal.integrated.defaultProfile.linux": "pwsh",
+				"terminal.integrated.defaultProfile.windows": "pwsh",
+				"terminal.integrated.profiles.linux": {
+					"pwsh": {
+						"path": "pwsh",
+						"icon": "terminal-powershell"
+					}
+				},
+				"terminal.integrated.profiles.windows": {
+					"pwsh": {
+						"path": "pwsh.exe",
+						"icon": "terminal-powershell"
+					}
+				}
+			}
+		}
+	},
+	// Uncomment if you want to use bash in 'onCreateCommand' after the container is created
+	"onCreateCommand": "/bin/bash ./.devcontainer/on-create.sh",
+	// Uncomment if you want to connect other than 'root'. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "root"
+}
